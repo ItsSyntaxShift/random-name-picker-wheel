@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,8 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 30px 15px;
-      background: linear-gradient(135deg, #090d16, #121826, #090d16);
+      padding: 20px 15px;
+      background: #070a12;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -18,6 +18,28 @@
       min-height: 100vh;
       box-sizing: border-box;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Bintik-Bintik Cahaya Melayang */
+    #bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     
     .header-container {
@@ -26,8 +48,8 @@
     }
 
     h1 { 
-      margin: 0 0 10px 0;
-      font-size: 36px;
+      margin: 0 0 8px 0;
+      font-size: 38px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -44,8 +66,8 @@
     }
 
     .crown-icon {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       filter: drop-shadow(0 0 12px #ff007f);
       animation: bounceCrown 2s infinite alternate;
     }
@@ -62,11 +84,11 @@
 
     .creator-badge {
       display: inline-block;
-      padding: 6px 20px;
+      padding: 5px 18px;
       background: rgba(255, 0, 127, 0.15);
       border: 2px solid #ff007f;
       border-radius: 30px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       color: #ff77b9;
       letter-spacing: 2px;
@@ -74,166 +96,56 @@
       box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
     }
 
-    /* Area Input Kolom Baru */
-    .input-section {
-      width: 100%;
-      max-width: 450px;
-      margin-bottom: 30px;
+    /* Layout Utama */
+    .content-layout {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      background: rgba(18, 24, 38, 0.6);
-      padding: 20px;
-      border-radius: 15px;
-      border: 1px solid rgba(0, 223, 216, 0.2);
-    }
-
-    .input-label {
-      font-size: 15px;
-      font-weight: 700;
-      color: #00dfd8;
-      text-shadow: 0 0 10px rgba(0, 223, 216, 0.4);
-      margin-bottom: 5px;
-    }
-
-    .input-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-      max-height: 210px;
-      overflow-y: auto;
-      padding-right: 5px;
-    }
-
-    /* Kustomisasi Scrollbar untuk kotak input */
-    .input-list::-webkit-scrollbar {
-      width: 6px;
-    }
-    .input-list::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.5);
-      border-radius: 10px;
-    }
-    .input-list::-webkit-scrollbar-thumb {
-      background: #00dfd8;
-      border-radius: 10px;
-    }
-
-    .name-slot {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.9);
-      border: 2px solid rgba(0, 223, 216, 0.3);
-      border-radius: 8px;
-      color: #ffffff;
-      padding: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      outline: none;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
-    }
-
-    .name-slot:focus {
-      border-color: #ff007f;
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
-    }
-
-    .action-row {
-      display: flex;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 35px;
+      justify-content: center;
+      align-items: flex-start;
       width: 100%;
       margin-top: 10px;
     }
 
-    .btn-add {
-      padding: 12px 15px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #00dfd8;
-      background: rgba(0, 223, 216, 0.1);
-      border: 2px solid #00dfd8;
-      border-radius: 8px;
-      cursor: pointer;
-      text-transform: uppercase;
-      flex: 1;
-      transition: all 0.2s;
-    }
-
-    .btn-add:hover {
-      background: rgba(0, 223, 216, 0.2);
-    }
-
-    .btn-update {
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 700;
-      color: white;
-      background: linear-gradient(45deg, #007cf0, #00dfd8);
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 0 12px rgba(0, 223, 216, 0.4);
-      flex: 2;
-      transition: all 0.2s ease;
-    }
-
-    .btn-update:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 20px rgba(0, 223, 216, 0.7);
-    }
-
-    /* Layout Roda & Tabel */
-    .main-layout {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: center;
-      align-items: flex-start;
-      width: 100%;
-      max-width: 950px;
-    }
-
+    /* Section Roda Besar */
     .wheel-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
-      max-width: 400px;
+      flex: 1 1 450px;
+      max-width: 520px;
     }
 
     .wheel-container {
       position: relative;
-      width: 90vw;
-      max-width: 350px;
-      height: 90vw;
-      max-height: 350px;
+      width: 480px;
+      height: 480px;
+      max-width: 88vw;
+      max-height: 88vw;
       border-radius: 50%;
       background-color: #0f172a;
-      box-shadow: 0 0 20px #ff007f, 0 0 40px #7928ca, 0 0 60px #00dfd8;
+      box-shadow: 0 0 30px #ff007f, 0 0 60px #7928ca, 0 0 90px #00dfd8;
       animation: rgbGlow 4s infinite alternate;
     }
 
     @keyframes rgbGlow {
-      0% { box-shadow: 0 0 15px #ff007f, 0 0 30px #7928ca; }
-      50% { box-shadow: 0 0 20px #7928ca, 0 0 40px #00dfd8; }
-      100% { box-shadow: 0 0 15px #00dfd8, 0 0 30px #ff007f; }
+      0% { box-shadow: 0 0 20px #ff007f, 0 0 40px #7928ca; }
+      50% { box-shadow: 0 0 30px #7928ca, 0 0 60px #00dfd8; }
+      100% { box-shadow: 0 0 20px #00dfd8, 0 0 40px #ff007f; }
     }
 
     .pointer {
       position: absolute;
-      top: -25px;
+      top: -28px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 14px solid transparent;
-      border-right: 14px solid transparent;
-      border-top: 32px solid #ff007f;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 36px solid #ff007f;
       z-index: 10;
-      filter: drop-shadow(0 0 8px #ff007f);
+      filter: drop-shadow(0 0 10px #ff007f);
     }
 
     .center-circle {
@@ -241,16 +153,16 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
       background-color: #121826;
       border-radius: 50%;
       border: 4px solid #00dfd8;
       z-index: 5;
-      box-shadow: 0 0 15px #00dfd8;
+      box-shadow: 0 0 18px #00dfd8;
     }
 
-    canvas {
+    canvas#wheel {
       width: 100%;
       height: 100%;
       border-radius: 50%;
@@ -265,9 +177,9 @@
     }
 
     button {
-      padding: 12px 28px;
-      font-size: 15px;
-      font-weight: 700;
+      padding: 13px 30px;
+      font-size: 16px;
+      font-weight: 800;
       color: white;
       border: none;
       border-radius: 8px;
@@ -315,16 +227,184 @@
       text-align: center;
     }
 
+    /* Panel Samping (Input & Tabel) */
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1 1 350px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .input-section {
+      background: rgba(18, 24, 38, 0.85);
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid rgba(0, 223, 216, 0.3);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+    }
+
+    .input-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #00dfd8;
+      text-shadow: 0 0 10px rgba(0, 223, 216, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .input-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .input-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .input-list::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 10px;
+    }
+    .input-list::-webkit-scrollbar-thumb {
+      background: #00dfd8;
+      border-radius: 10px;
+    }
+
+    .name-slot {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid rgba(0, 223, 216, 0.3);
+      border-radius: 8px;
+      color: #ffffff;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .name-slot:focus {
+      border-color: #ff007f;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+    }
+
+    /* Blok Khusus Tambah Kolom Nama */
+    .add-slots-box {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px dashed rgba(0, 223, 216, 0.4);
+      border-radius: 10px;
+    }
+
+    .add-slots-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff77b9;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .preset-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-preset {
+      flex: 1;
+      padding: 7px 0;
+      font-size: 12px;
+      font-weight: 800;
+      color: #00dfd8;
+      background: rgba(0, 223, 216, 0.12);
+      border: 1px solid #00dfd8;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-preset:hover {
+      background: rgba(0, 223, 216, 0.3);
+      transform: scale(1.05);
+    }
+
+    .custom-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .custom-input {
+      width: 80px;
+      padding: 8px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid #ff007f;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      outline: none;
+    }
+
+    .btn-add-custom {
+      flex: 1;
+      padding: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      background: rgba(255, 0, 127, 0.2);
+      border: 1.5px solid #ff007f;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-add-custom:hover {
+      background: rgba(255, 0, 127, 0.4);
+    }
+
+    .btn-update {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: white;
+      background: linear-gradient(45deg, #007cf0, #00dfd8);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 15px rgba(0, 223, 216, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-update:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 223, 216, 0.7);
+    }
+
     .table-section {
       background: rgba(18, 24, 38, 0.85);
-      border: 2px solid rgba(0, 223, 216, 0.3);
+      border: 1px solid rgba(0, 223, 216, 0.3);
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      width: 100%;
-      max-width: 350px;
-      max-height: 350px;
+      max-height: 220px;
       overflow-y: auto;
+      backdrop-filter: blur(5px);
     }
 
     table {
@@ -344,7 +424,6 @@
       text-transform: uppercase;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.5px;
       background: rgba(15, 23, 42, 0.95);
       position: sticky;
       top: 0;
@@ -355,7 +434,7 @@
     }
 
     .highlight-winner {
-      background: linear-gradient(90deg, rgba(121, 40, 202, 0.4), rgba(255, 0, 127, 0.4)) !important;
+      background: linear-gradient(90deg, rgba(121, 40, 202, 0.5), rgba(255, 0, 127, 0.5)) !important;
       color: #ffffff;
       font-weight: bold;
       border-left: 4px solid #ff007f;
@@ -365,76 +444,153 @@
 </head>
 <body>
 
-  <div class="header-container">
-    <h1>
-      <svg class="crown-icon" viewBox="0 0 24 24" fill="url(#crownGrad)">
-        <defs>
-          <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff007f" />
-            <stop offset="50%" stop-color="#7928ca" />
-            <stop offset="100%" stop-color="#00dfd8" />
-          </linearGradient>
-        </defs>
-        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
-      </svg>
-      Spin Wheel
-    </h1>
-    <div class="creator-badge">Created by Siddiq</div>
-  </div>
+  <!-- Background Canvas Bintik Melayang -->
+  <canvas id="bg-particles"></canvas>
 
-  <div class="input-section">
-    <div class="input-label">Enter Participant Names:</div>
-    <div id="input-list" class="input-list">
-      <!-- 5 Kolom Disediakan Diawal -->
-      <input type="text" class="name-slot" placeholder="Participant 1">
-      <input type="text" class="name-slot" placeholder="Participant 2">
-      <input type="text" class="name-slot" placeholder="Participant 3">
-      <input type="text" class="name-slot" placeholder="Participant 4">
-      <input type="text" class="name-slot" placeholder="Participant 5">
+  <div class="main-wrapper">
+    <div class="header-container">
+      <h1>
+        <svg class="crown-icon" viewBox="0 0 24 24" fill="url(#crownGrad)">
+          <defs>
+            <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ff007f" />
+              <stop offset="50%" stop-color="#7928ca" />
+              <stop offset="100%" stop-color="#00dfd8" />
+            </linearGradient>
+          </defs>
+          <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
+        </svg>
+        Spin Wheel
+      </h1>
+      <div class="creator-badge">Created by Siddiq</div>
     </div>
-    <div class="action-row">
-      <button id="add-slot-btn" class="btn-add">+ Add More</button>
-      <button id="update-btn" class="btn-update">Update Wheel</button>
-    </div>
-  </div>
-  
-  <div class="main-layout">
-    <div class="wheel-section">
-      <div class="wheel-container">
-        <div class="pointer"></div>
-        <div class="center-circle"></div>
-        <canvas id="wheel" width="800" height="800"></canvas>
-      </div>
 
-      <div class="button-group">
-        <button id="spin-btn" disabled>Spin</button>
-        <button id="skip-btn" disabled>Skip</button>
-      </div>
+    <div class="content-layout">
       
-      <div id="winner-text">Please enter names to start</div>
-    </div>
+      <!-- Bagian Roda Utama -->
+      <div class="wheel-section">
+        <div class="wheel-container">
+          <div class="pointer"></div>
+          <div class="center-circle"></div>
+          <canvas id="wheel" width="800" height="800"></canvas>
+        </div>
 
-    <div class="table-section">
-      <table>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Participant Name</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-        </tbody>
-      </table>
+        <div class="button-group">
+          <button id="spin-btn" disabled>Spin</button>
+          <button id="skip-btn" disabled>Skip</button>
+        </div>
+        
+        <div id="winner-text">Isi nama murid lalu klik "Update Wheel"</div>
+      </div>
+
+      <!-- Panel Samping Input Nama -->
+      <div class="side-panel">
+        
+        <div class="input-section">
+          <div class="input-label">Enter Participant Names:</div>
+          <div id="input-list" class="input-list">
+            <input type="text" class="name-slot" placeholder="Participant 1">
+            <input type="text" class="name-slot" placeholder="Participant 2">
+            <input type="text" class="name-slot" placeholder="Participant 3">
+            <input type="text" class="name-slot" placeholder="Participant 4">
+          </div>
+
+          <!-- Blok Khusus Tambah Kolom Nama -->
+          <div class="add-slots-box">
+            <div class="add-slots-title">Tambah Kolom Nama:</div>
+            
+            <!-- Tombol Preset Cepat -->
+            <div class="preset-row">
+              <button type="button" class="btn-preset" onclick="addSlots(1)">+1</button>
+              <button type="button" class="btn-preset" onclick="addSlots(5)">+5</button>
+              <button type="button" class="btn-preset" onclick="addSlots(10)">+10</button>
+              <button type="button" class="btn-preset" onclick="addSlots(15)">+15</button>
+              <button type="button" class="btn-preset" onclick="addSlots(30)">+30</button>
+            </div>
+
+            <!-- Custom Input -->
+            <div class="custom-row">
+              <input type="number" id="custom-slot-input" class="custom-input" placeholder="Jumlah" min="1" max="100" value="1">
+              <button type="button" id="btn-add-custom" class="btn-add-custom">+ Tambah Custom</button>
+            </div>
+          </div>
+
+          <button id="update-btn" class="btn-update">Update Wheel</button>
+        </div>
+
+        <div class="table-section">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Participant Name</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
   <script>
+    // --- 1. ANIMASI BINTIK-BINTIK PUTIH MELAYANG ---
+    const bgCanvas = document.getElementById("bg-particles");
+    const bgCtx = bgCanvas.getContext("2d");
+    let particles = [];
+
+    function resizeBg() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeBg);
+    resizeBg();
+
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * 2 + 0.5,
+        alpha: Math.random() * 0.7 + 0.3,
+        speedY: Math.random() * 0.4 + 0.1,
+        speedX: (Math.random() - 0.5) * 0.2
+      });
+    }
+
+    function animateParticles() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      bgCtx.fillStyle = "#ffffff";
+
+      particles.forEach(p => {
+        bgCtx.globalAlpha = p.alpha;
+        bgCtx.beginPath();
+        bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        bgCtx.fill();
+
+        p.y -= p.speedY;
+        p.x += p.speedX;
+
+        if (p.y < 0) {
+          p.y = bgCanvas.height;
+          p.x = Math.random() * bgCanvas.width;
+        }
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- 2. LOGIKA RODA & INPUT NAMA ---
     const canvas = document.getElementById("wheel");
     const ctx = canvas.getContext("2d");
     const spinBtn = document.getElementById("spin-btn");
     const skipBtn = document.getElementById("skip-btn");
     const updateBtn = document.getElementById("update-btn");
-    const addSlotBtn = document.getElementById("add-slot-btn");
+    const btnAddCustom = document.getElementById("btn-add-custom");
+    const customSlotInput = document.getElementById("custom-slot-input");
     const inputList = document.getElementById("input-list");
     const winnerText = document.getElementById("winner-text");
     const tableBody = document.getElementById("table-body");
@@ -504,11 +660,13 @@
         ctx.fillStyle = "#1e293b";
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.fill();
+
+        // Teks Petunjuk Dibuat Agak Di Bawah Supaya Tidak Tertutup Lingkaran Tengah
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillStyle = "#64748b";
-        ctx.font = "bold 32px 'Segoe UI', Arial";
-        ctx.fillText("No names added", centerX, centerY);
+        ctx.fillStyle = "#00dfd8";
+        ctx.font = "bold 28px 'Segoe UI', Arial";
+        ctx.fillText("MASUKKAN NAMA", centerX, centerY + 100);
         return;
       }
 
@@ -536,11 +694,12 @@
         ctx.shadowBlur = 5;
         
         let fontSize = 32;
-        if (names.length > 20) fontSize = 22;
+        if (names.length > 30) fontSize = 16;
+        else if (names.length > 20) fontSize = 22;
         else if (names.length > 12) fontSize = 26;
 
         ctx.font = `bold ${fontSize}px 'Segoe UI', Arial`; 
-        ctx.fillText(names[i], radius - 40, 0);
+        ctx.fillText(names[i], radius - 35, 0);
         ctx.restore();
       }
     }
@@ -555,18 +714,25 @@
       });
     }
 
-    // Fungsi Tambah Kolom Baru
-    addSlotBtn.addEventListener("click", () => {
-      const allSlots = document.querySelectorAll(".name-slot");
-      const newSlot = document.createElement("input");
-      newSlot.type = "text";
-      newSlot.className = "name-slot";
-      newSlot.placeholder = "Participant " + (allSlots.length + 1);
-      inputList.appendChild(newSlot);
-      inputList.scrollTop = inputList.scrollHeight; // Auto-scroll ke bawah
+    // Fungsi Tambah Kolom
+    function addSlots(count) {
+      const currentSlots = document.querySelectorAll(".name-slot").length;
+      for (let i = 0; i < count; i++) {
+        const newSlot = document.createElement("input");
+        newSlot.type = "text";
+        newSlot.className = "name-slot";
+        newSlot.placeholder = "Participant " + (currentSlots + i + 1);
+        inputList.appendChild(newSlot);
+      }
+      inputList.scrollTop = inputList.scrollHeight;
+    }
+
+    btnAddCustom.addEventListener("click", () => {
+      const val = parseInt(customSlotInput.value) || 1;
+      addSlots(val);
     });
 
-    // Fungsi Update dari Kolom-Kolom
+    // Update Roda
     updateBtn.addEventListener("click", () => {
       const inputs = document.querySelectorAll(".name-slot");
       names = [];
@@ -579,10 +745,10 @@
       });
 
       if (names.length < 2) {
-        winnerText.innerText = "Add at least 2 names to spin";
+        winnerText.innerText = "Minimal isi 2 nama untuk spin";
         spinBtn.disabled = true;
       } else {
-        winnerText.innerText = "Ready to spin!";
+        winnerText.innerText = "Siap untuk Spin!";
         spinBtn.disabled = false;
       }
 
@@ -599,12 +765,12 @@
       if (pointerAngle < 0) pointerAngle += 360;
       const winningIndex = Math.floor(pointerAngle / degreePerSegment);
       
-      winnerText.innerText = "Winner: " + names[winningIndex];
+      winnerText.innerText = "Pemenang: " + names[winningIndex];
       playWinSound();
       
       confetti({ 
-        particleCount: 120, 
-        spread: 80, 
+        particleCount: 130, 
+        spread: 85, 
         origin: { y: 0.6 }, 
         colors: ['#ff007f', '#7928ca', '#00dfd8', '#ffaa00']
       });
@@ -627,7 +793,7 @@
       
       spinBtn.disabled = true;
       skipBtn.disabled = false;
-      winnerText.innerText = "Spinning...";
+      winnerText.innerText = "Memutar...";
       
       document.querySelectorAll("#table-body tr").forEach(row => row.classList.remove("highlight-winner"));
 

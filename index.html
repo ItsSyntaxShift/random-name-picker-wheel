@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Siddiq Spin Wheel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin Wheel RGB Edition</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 30px 20px;
+      padding: 30px 15px;
       background: linear-gradient(135deg, #090d16, #121826, #090d16);
       color: #ffffff;
       display: flex;
@@ -16,16 +17,17 @@
       align-items: center;
       min-height: 100vh;
       box-sizing: border-box;
+      overflow-x: hidden;
     }
     
     .header-container {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     h1 { 
       margin: 0 0 10px 0;
-      font-size: 38px;
+      font-size: 36px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -35,6 +37,22 @@
       -webkit-text-fill-color: transparent;
       animation: rgbText 6s linear infinite;
       text-shadow: 0 0 30px rgba(121, 40, 202, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .crown-icon {
+      width: 38px;
+      height: 38px;
+      filter: drop-shadow(0 0 12px #ff007f);
+      animation: bounceCrown 2s infinite alternate;
+    }
+
+    @keyframes bounceCrown {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px #ff007f); }
+      100% { transform: translateY(-4px) scale(1.08); filter: drop-shadow(0 0 18px #00dfd8); }
     }
 
     @keyframes rgbText {
@@ -56,14 +74,19 @@
       box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
     }
 
+    /* Area Input Kolom Baru */
     .input-section {
       width: 100%;
-      max-width: 480px;
+      max-width: 450px;
       margin-bottom: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      background: rgba(18, 24, 38, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(0, 223, 216, 0.2);
     }
 
     .input-label {
@@ -71,30 +94,78 @@
       font-weight: 700;
       color: #00dfd8;
       text-shadow: 0 0 10px rgba(0, 223, 216, 0.4);
+      margin-bottom: 5px;
     }
 
-    textarea {
+    .input-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       width: 100%;
-      height: 100px;
-      background: rgba(18, 24, 38, 0.9);
-      border: 2px solid rgba(0, 223, 216, 0.4);
+      max-height: 210px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    /* Kustomisasi Scrollbar untuk kotak input */
+    .input-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .input-list::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.5);
       border-radius: 10px;
+    }
+    .input-list::-webkit-scrollbar-thumb {
+      background: #00dfd8;
+      border-radius: 10px;
+    }
+
+    .name-slot {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px solid rgba(0, 223, 216, 0.3);
+      border-radius: 8px;
       color: #ffffff;
       padding: 12px;
       font-family: inherit;
       font-size: 14px;
-      resize: vertical;
-      box-sizing: border-box;
       outline: none;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
     }
 
-    textarea:focus {
+    .name-slot:focus {
       border-color: #ff007f;
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.5);
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .btn-add {
+      padding: 12px 15px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #00dfd8;
+      background: rgba(0, 223, 216, 0.1);
+      border: 2px solid #00dfd8;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      flex: 1;
+      transition: all 0.2s;
+    }
+
+    .btn-add:hover {
+      background: rgba(0, 223, 216, 0.2);
     }
 
     .btn-update {
-      padding: 10px 24px;
+      padding: 12px 20px;
       font-size: 14px;
       font-weight: 700;
       color: white;
@@ -105,6 +176,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 0 12px rgba(0, 223, 216, 0.4);
+      flex: 2;
       transition: all 0.2s ease;
     }
 
@@ -113,6 +185,7 @@
       box-shadow: 0 0 20px rgba(0, 223, 216, 0.7);
     }
 
+    /* Layout Roda & Tabel */
     .main-layout {
       display: flex;
       flex-wrap: wrap;
@@ -127,12 +200,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 100%;
+      max-width: 400px;
     }
 
     .wheel-container {
       position: relative;
-      width: 380px;
-      height: 380px;
+      width: 90vw;
+      max-width: 350px;
+      height: 90vw;
+      max-height: 350px;
       border-radius: 50%;
       background-color: #0f172a;
       box-shadow: 0 0 20px #ff007f, 0 0 40px #7928ca, 0 0 60px #00dfd8;
@@ -147,14 +224,14 @@
 
     .pointer {
       position: absolute;
-      top: -28px;
+      top: -25px;
       left: 50%;
       transform: translateX(-50%);
       width: 0;
       height: 0;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
-      border-top: 36px solid #ff007f;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 32px solid #ff007f;
       z-index: 10;
       filter: drop-shadow(0 0 8px #ff007f);
     }
@@ -164,8 +241,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       background-color: #121826;
       border-radius: 50%;
       border: 4px solid #00dfd8;
@@ -230,7 +307,7 @@
 
     #winner-text {
       margin-top: 18px;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: #00dfd8;
       text-shadow: 0 0 15px rgba(0, 223, 216, 0.6);
@@ -244,8 +321,9 @@
       border-radius: 12px;
       padding: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      width: 260px;
-      max-height: 420px;
+      width: 100%;
+      max-width: 350px;
+      max-height: 350px;
       overflow-y: auto;
     }
 
@@ -256,7 +334,7 @@
     }
 
     th, td {
-      padding: 8px 12px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -267,7 +345,7 @@
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.95);
       position: sticky;
       top: 0;
     }
@@ -288,14 +366,36 @@
 <body>
 
   <div class="header-container">
-    <h1>Siddiq Spin Wheel</h1>
+    <h1>
+      <svg class="crown-icon" viewBox="0 0 24 24" fill="url(#crownGrad)">
+        <defs>
+          <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff007f" />
+            <stop offset="50%" stop-color="#7928ca" />
+            <stop offset="100%" stop-color="#00dfd8" />
+          </linearGradient>
+        </defs>
+        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
+      </svg>
+      Spin Wheel
+    </h1>
     <div class="creator-badge">Created by Siddiq</div>
   </div>
 
   <div class="input-section">
-    <label class="input-label" for="name-input">Enter Names (One name per line):</label>
-    <textarea id="name-input" placeholder="Type or paste names here...&#10;Example:&#10;Alex&#10;Jordan&#10;Taylor"></textarea>
-    <button class="btn-update" id="update-btn">Update Wheel</button>
+    <div class="input-label">Enter Participant Names:</div>
+    <div id="input-list" class="input-list">
+      <!-- 5 Kolom Disediakan Diawal -->
+      <input type="text" class="name-slot" placeholder="Participant 1">
+      <input type="text" class="name-slot" placeholder="Participant 2">
+      <input type="text" class="name-slot" placeholder="Participant 3">
+      <input type="text" class="name-slot" placeholder="Participant 4">
+      <input type="text" class="name-slot" placeholder="Participant 5">
+    </div>
+    <div class="action-row">
+      <button id="add-slot-btn" class="btn-add">+ Add More</button>
+      <button id="update-btn" class="btn-update">Update Wheel</button>
+    </div>
   </div>
   
   <div class="main-layout">
@@ -334,7 +434,8 @@
     const spinBtn = document.getElementById("spin-btn");
     const skipBtn = document.getElementById("skip-btn");
     const updateBtn = document.getElementById("update-btn");
-    const nameInput = document.getElementById("name-input");
+    const addSlotBtn = document.getElementById("add-slot-btn");
+    const inputList = document.getElementById("input-list");
     const winnerText = document.getElementById("winner-text");
     const tableBody = document.getElementById("table-body");
 
@@ -404,9 +505,10 @@
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.fill();
         ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
         ctx.fillStyle = "#64748b";
         ctx.font = "bold 32px 'Segoe UI', Arial";
-        ctx.fillText("No Names Added", centerX, centerY + 10);
+        ctx.fillText("No names added", centerX, centerY);
         return;
       }
 
@@ -428,16 +530,17 @@
         ctx.translate(centerX, centerY);
         ctx.rotate(angle + arc / 2);
         ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
         ctx.fillStyle = "#ffffff";
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
         ctx.shadowBlur = 5;
         
-        let fontSize = 30;
-        if (names.length > 20) fontSize = 20;
-        else if (names.length > 12) fontSize = 24;
+        let fontSize = 32;
+        if (names.length > 20) fontSize = 22;
+        else if (names.length > 12) fontSize = 26;
 
         ctx.font = `bold ${fontSize}px 'Segoe UI', Arial`; 
-        ctx.fillText(names[i], radius - 35, 8);
+        ctx.fillText(names[i], radius - 40, 0);
         ctx.restore();
       }
     }
@@ -452,9 +555,28 @@
       });
     }
 
-    function updateNamesFromInput() {
-      const rawText = nameInput.value;
-      names = rawText.split("\n").map(n => n.trim()).filter(n => n !== "");
+    // Fungsi Tambah Kolom Baru
+    addSlotBtn.addEventListener("click", () => {
+      const allSlots = document.querySelectorAll(".name-slot");
+      const newSlot = document.createElement("input");
+      newSlot.type = "text";
+      newSlot.className = "name-slot";
+      newSlot.placeholder = "Participant " + (allSlots.length + 1);
+      inputList.appendChild(newSlot);
+      inputList.scrollTop = inputList.scrollHeight; // Auto-scroll ke bawah
+    });
+
+    // Fungsi Update dari Kolom-Kolom
+    updateBtn.addEventListener("click", () => {
+      const inputs = document.querySelectorAll(".name-slot");
+      names = [];
+      
+      inputs.forEach(input => {
+        const val = input.value.trim();
+        if(val !== "") {
+          names.push(val);
+        }
+      });
 
       if (names.length < 2) {
         winnerText.innerText = "Add at least 2 names to spin";
@@ -466,7 +588,7 @@
 
       drawWheel();
       buildTable();
-    }
+    });
 
     function showWinner(finalRot) {
       if (names.length === 0) return;
@@ -497,8 +619,6 @@
       skipBtn.disabled = true;
       isSpinning = false;
     }
-
-    updateBtn.addEventListener("click", updateNamesFromInput);
 
     spinBtn.addEventListener("click", () => {
       if (isSpinning || names.length < 2) return;

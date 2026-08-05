@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spin Wheel RGB Edition</title>
+  <title>Siddiq Spin Wheel</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 40px 20px 30px 20px;
+      padding: 30px 20px;
       background: linear-gradient(135deg, #090d16, #121826, #090d16);
       color: #ffffff;
       display: flex;
@@ -21,12 +20,12 @@
     
     .header-container {
       text-align: center;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
     }
 
     h1 { 
-      margin: 0 0 12px 0;
-      font-size: 40px;
+      margin: 0 0 10px 0;
+      font-size: 38px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -36,22 +35,6 @@
       -webkit-text-fill-color: transparent;
       animation: rgbText 6s linear infinite;
       text-shadow: 0 0 30px rgba(121, 40, 202, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .crown-icon {
-      width: 42px;
-      height: 42px;
-      filter: drop-shadow(0 0 12px #ff007f);
-      animation: bounceCrown 2s infinite alternate;
-    }
-
-    @keyframes bounceCrown {
-      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px #ff007f); }
-      100% { transform: translateY(-4px) scale(1.08); filter: drop-shadow(0 0 18px #00dfd8); }
     }
 
     @keyframes rgbText {
@@ -61,28 +44,73 @@
 
     .creator-badge {
       display: inline-block;
-      padding: 8px 22px;
+      padding: 6px 20px;
       background: rgba(255, 0, 127, 0.15);
       border: 2px solid #ff007f;
       border-radius: 30px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       color: #ff77b9;
       letter-spacing: 2px;
       text-transform: uppercase;
       box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
-      animation: pulseBadge 2s infinite alternate;
     }
 
-    @keyframes pulseBadge {
-      0% { 
-        box-shadow: 0 0 10px rgba(255, 0, 127, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.2); 
-        transform: scale(1); 
-      }
-      100% { 
-        box-shadow: 0 0 25px rgba(255, 0, 127, 0.9), inset 0 0 15px rgba(255, 0, 127, 0.5); 
-        transform: scale(1.04); 
-      }
+    .input-section {
+      width: 100%;
+      max-width: 480px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .input-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: #00dfd8;
+      text-shadow: 0 0 10px rgba(0, 223, 216, 0.4);
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      background: rgba(18, 24, 38, 0.9);
+      border: 2px solid rgba(0, 223, 216, 0.4);
+      border-radius: 10px;
+      color: #ffffff;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #ff007f;
+      box-shadow: 0 0 12px rgba(255, 0, 127, 0.5);
+    }
+
+    .btn-update {
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(45deg, #007cf0, #00dfd8);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px rgba(0, 223, 216, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-update:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(0, 223, 216, 0.7);
     }
 
     .main-layout {
@@ -92,7 +120,7 @@
       justify-content: center;
       align-items: flex-start;
       width: 100%;
-      max-width: 1100px;
+      max-width: 950px;
     }
 
     .wheel-section {
@@ -103,8 +131,8 @@
 
     .wheel-container {
       position: relative;
-      width: 390px;
-      height: 390px;
+      width: 380px;
+      height: 380px;
       border-radius: 50%;
       background-color: #0f172a;
       box-shadow: 0 0 20px #ff007f, 0 0 40px #7928ca, 0 0 60px #00dfd8;
@@ -154,14 +182,14 @@
     .button-group {
       display: flex;
       gap: 15px;
-      margin-top: 30px;
+      margin-top: 25px;
       justify-content: center;
       width: 100%;
     }
 
     button {
       padding: 12px 28px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: white;
       border: none;
@@ -201,30 +229,23 @@
     }
 
     #winner-text {
-      margin-top: 22px;
-      font-size: 28px;
-      font-weight: 900;
+      margin-top: 18px;
+      font-size: 24px;
+      font-weight: 800;
       color: #00dfd8;
-      text-shadow: 0 0 20px rgba(0, 223, 216, 0.8), 0 0 10px #ff007f;
-      min-height: 45px;
+      text-shadow: 0 0 15px rgba(0, 223, 216, 0.6);
+      min-height: 35px;
       text-align: center;
-      letter-spacing: 1px;
-    }
-
-    .right-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 280px;
     }
 
     .table-section {
-      background: rgba(18, 24, 38, 0.9);
-      border: 2px solid rgba(0, 223, 216, 0.5);
+      background: rgba(18, 24, 38, 0.85);
+      border: 2px solid rgba(0, 223, 216, 0.3);
       border-radius: 12px;
       padding: 15px;
-      box-shadow: 0 0 25px rgba(0, 223, 216, 0.2);
-      max-height: 300px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      width: 260px;
+      max-height: 420px;
       overflow-y: auto;
     }
 
@@ -235,106 +256,46 @@
     }
 
     th, td {
-      padding: 9px 12px;
+      padding: 8px 12px;
       text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     th {
       color: #00dfd8;
       text-transform: uppercase;
       font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.8px;
-      background: rgba(15, 23, 42, 0.95);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      background: rgba(15, 23, 42, 0.9);
       position: sticky;
       top: 0;
     }
 
     td {
-      color: #ffffff;
-      font-weight: 600;
+      color: #cbd5e1;
     }
 
     .highlight-winner {
-      background: linear-gradient(90deg, rgba(255, 0, 127, 0.8), rgba(121, 40, 202, 0.8)) !important;
-      color: #ffffff !important;
-      font-weight: 900 !important;
-      font-size: 15px;
-      border-left: 6px solid #00dfd8;
-      box-shadow: 0 0 15px #ff007f;
-      text-shadow: 0 0 10px #ffffff;
-    }
-
-    .input-section {
-      background: rgba(18, 24, 38, 0.9);
-      border: 2px solid rgba(121, 40, 202, 0.5);
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 0 25px rgba(121, 40, 202, 0.2);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .input-section h3 {
-      margin: 0;
-      color: #ff77b9;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-align: center;
-    }
-
-    textarea {
-      width: 100%;
-      height: 120px;
-      background: rgba(9, 13, 22, 0.8);
-      border: 1px solid #7928ca;
-      border-radius: 6px;
-      color: #fff;
-      font-family: inherit;
-      padding: 10px;
-      box-sizing: border-box;
-      resize: vertical;
-      outline: none;
-    }
-
-    textarea:focus {
-      border-color: #ff007f;
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
-    }
-
-    #update-wheel-btn {
-      background: linear-gradient(45deg, #059669, #10b981);
-      padding: 10px;
-      font-size: 14px;
-      width: 100%;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
-    }
-    
-    #update-wheel-btn:hover {
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+      background: linear-gradient(90deg, rgba(121, 40, 202, 0.4), rgba(255, 0, 127, 0.4)) !important;
+      color: #ffffff;
+      font-weight: bold;
+      border-left: 4px solid #ff007f;
+      text-shadow: 0 0 8px #ff007f;
     }
   </style>
 </head>
 <body>
 
   <div class="header-container">
-    <h1>
-      <svg class="crown-icon" viewBox="0 0 24 24" fill="url(#crownGrad)">
-        <defs>
-          <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff007f" />
-            <stop offset="50%" stop-color="#7928ca" />
-            <stop offset="100%" stop-color="#00dfd8" />
-          </linearGradient>
-        </defs>
-        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
-      </svg>
-      Spin Wheel
-    </h1>
+    <h1>Siddiq Spin Wheel</h1>
     <div class="creator-badge">Created by Siddiq</div>
+  </div>
+
+  <div class="input-section">
+    <label class="input-label" for="name-input">Enter Names (One name per line):</label>
+    <textarea id="name-input" placeholder="Type or paste names here...&#10;Example:&#10;Alex&#10;Jordan&#10;Taylor"></textarea>
+    <button class="btn-update" id="update-btn">Update Wheel</button>
   </div>
   
   <div class="main-layout">
@@ -346,32 +307,24 @@
       </div>
 
       <div class="button-group">
-        <button id="spin-btn">Putar</button>
-        <button id="skip-btn" disabled>Lewati</button>
+        <button id="spin-btn" disabled>Spin</button>
+        <button id="skip-btn" disabled>Skip</button>
       </div>
       
-      <div id="winner-text"></div>
+      <div id="winner-text">Please enter names to start</div>
     </div>
 
-    <div class="right-panel">
-      <div class="table-section">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Peserta</th>
-            </tr>
-          </thead>
-          <tbody id="table-body">
-          </tbody>
-        </table>
-      </div>
-      
-      <div class="input-section">
-        <h3>Edit Nama Peserta</h3>
-        <textarea id="names-input" placeholder="Ketik nama di sini, pisahkan dengan Enter..."></textarea>
-        <button id="update-wheel-btn">Perbarui Roda</button>
-      </div>
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Participant Name</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -380,36 +333,25 @@
     const ctx = canvas.getContext("2d");
     const spinBtn = document.getElementById("spin-btn");
     const skipBtn = document.getElementById("skip-btn");
+    const updateBtn = document.getElementById("update-btn");
+    const nameInput = document.getElementById("name-input");
     const winnerText = document.getElementById("winner-text");
     const tableBody = document.getElementById("table-body");
-    const namesInput = document.getElementById("names-input");
-    const updateWheelBtn = document.getElementById("update-wheel-btn");
 
-    let names = [
-      "Siddiq", "Syarif", "Raihan", "Sunan", "Arrafa",
-      "Farros", "Afran", "Yusuf", "Hafiz", "Dafa",
-      "Hemas", "Vallen", "Livia", "Leandra", "Dearosa"
-    ];
-
-    const baseColors = [
+    let names = [];
+    const colors = [
       "#2563eb", "#059669", "#db2777", "#7c3aed", "#d97706",
       "#0284c7", "#16a34a", "#dc2626", "#9333ea", "#ca8a04",
       "#0d9488", "#4f46e5", "#ea580c", "#c026d3", "#0891b2"
     ];
 
-    let colors = [...baseColors];
-    let numSegments = names.length;
-    let arc = (2 * Math.PI) / numSegments;
     let currentRotation = 0;
     let isSpinning = false;
     let spinTimeout = null;
     let tickInterval = null;
-    let targetRotationValue = 0;
-    
+
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     let audioCtx;
-
-    namesInput.value = names.join("\n");
 
     function initAudio() {
       if (!audioCtx) audioCtx = new AudioContext();
@@ -450,12 +392,27 @@
     }
 
     function drawWheel() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
       const radius = canvas.width / 2;
 
-      for (let i = 0; i < numSegments; i++) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (names.length === 0) {
+        ctx.beginPath();
+        ctx.fillStyle = "#1e293b";
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#64748b";
+        ctx.font = "bold 32px 'Segoe UI', Arial";
+        ctx.fillText("No Names Added", centerX, centerY + 10);
+        return;
+      }
+
+      const arc = (2 * Math.PI) / names.length;
+
+      for (let i = 0; i < names.length; i++) {
         const angle = i * arc;
         ctx.beginPath();
         ctx.fillStyle = colors[i % colors.length];
@@ -475,9 +432,12 @@
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
         ctx.shadowBlur = 5;
         
-        const fontSize = numSegments > 20 ? 20 : 30;
+        let fontSize = 30;
+        if (names.length > 20) fontSize = 20;
+        else if (names.length > 12) fontSize = 24;
+
         ctx.font = `bold ${fontSize}px 'Segoe UI', Arial`; 
-        ctx.fillText(names[i], radius - 35, 10);
+        ctx.fillText(names[i], radius - 35, 8);
         ctx.restore();
       }
     }
@@ -492,14 +452,32 @@
       });
     }
 
+    function updateNamesFromInput() {
+      const rawText = nameInput.value;
+      names = rawText.split("\n").map(n => n.trim()).filter(n => n !== "");
+
+      if (names.length < 2) {
+        winnerText.innerText = "Add at least 2 names to spin";
+        spinBtn.disabled = true;
+      } else {
+        winnerText.innerText = "Ready to spin!";
+        spinBtn.disabled = false;
+      }
+
+      drawWheel();
+      buildTable();
+    }
+
     function showWinner(finalRot) {
+      if (names.length === 0) return;
+
       const normalizedRotation = finalRot % 360;
-      const degreePerSegment = 360 / numSegments;
+      const degreePerSegment = 360 / names.length;
       let pointerAngle = (270 - normalizedRotation) % 360;
       if (pointerAngle < 0) pointerAngle += 360;
       const winningIndex = Math.floor(pointerAngle / degreePerSegment);
       
-      winnerText.innerText = "Pemenang: " + names[winningIndex];
+      winnerText.innerText = "Winner: " + names[winningIndex];
       playWinSound();
       
       confetti({ 
@@ -511,56 +489,31 @@
 
       const rows = document.querySelectorAll("#table-body tr");
       rows.forEach(row => row.classList.remove("highlight-winner"));
-      
-      const winningRow = document.getElementById(`row-${winningIndex}`);
-      if(winningRow) winningRow.classList.add("highlight-winner");
+      if (document.getElementById(`row-${winningIndex}`)) {
+        document.getElementById(`row-${winningIndex}`).classList.add("highlight-winner");
+      }
 
       spinBtn.disabled = false;
       skipBtn.disabled = true;
       isSpinning = false;
     }
 
-    updateWheelBtn.addEventListener("click", () => {
-      if (isSpinning) return;
-      
-      const rawText = namesInput.value;
-      const newNames = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
-      
-      if (newNames.length < 2) {
-        alert("Minimal harus ada 2 nama peserta untuk diputar!");
-        return;
-      }
-
-      names = newNames;
-      numSegments = names.length;
-      arc = (2 * Math.PI) / numSegments;
-      
-      currentRotation = 0;
-      canvas.style.transition = 'none';
-      canvas.style.transform = `rotate(0deg)`;
-      winnerText.innerText = "";
-      
-      drawWheel();
-      buildTable();
-    });
-
-    drawWheel();
-    buildTable();
+    updateBtn.addEventListener("click", updateNamesFromInput);
 
     spinBtn.addEventListener("click", () => {
-      if (isSpinning) return;
+      if (isSpinning || names.length < 2) return;
       isSpinning = true;
       initAudio();
       
       spinBtn.disabled = true;
       skipBtn.disabled = false;
-      winnerText.innerText = "Memutar...";
+      winnerText.innerText = "Spinning...";
       
       document.querySelectorAll("#table-body tr").forEach(row => row.classList.remove("highlight-winner"));
 
       const randomSpins = Math.floor(Math.random() * 4) + 5; 
       const randomDegree = Math.floor(Math.random() * 360);
-      targetRotationValue = currentRotation + (randomSpins * 360) + randomDegree;
+      const targetRotationValue = currentRotation + (randomSpins * 360) + randomDegree;
       currentRotation = targetRotationValue;
 
       canvas.style.transition = 'transform 5s cubic-bezier(0.15, 0.75, 0.1, 1)';
@@ -590,6 +543,8 @@
 
       showWinner(currentRotation);
     });
+
+    drawWheel();
   </script>
 </body>
 </html>

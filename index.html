@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin Wheel RGB Edition</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px 20px 30px 20px;
+      background: linear-gradient(135deg, #090d16, #121826, #090d16);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    
+    .header-container {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    h1 { 
+      margin: 0 0 12px 0;
+      font-size: 40px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ff007f, #7928ca, #00dfd8, #ff007f);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: rgbText 6s linear infinite;
+      text-shadow: 0 0 30px rgba(121, 40, 202, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .crown-icon {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 0 12px #ff007f);
+      animation: bounceCrown 2s infinite alternate;
+    }
+
+    @keyframes bounceCrown {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 8px #ff007f); }
+      100% { transform: translateY(-4px) scale(1.08); filter: drop-shadow(0 0 18px #00dfd8); }
+    }
+
+    @keyframes rgbText {
+      0% { background-position: 0% center; }
+      100% { background-position: 300% center; }
+    }
+
+    .creator-badge {
+      display: inline-block;
+      padding: 8px 22px;
+      background: rgba(255, 0, 127, 0.15);
+      border: 2px solid #ff007f;
+      border-radius: 30px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #ff77b9;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+      animation: pulseBadge 2s infinite alternate;
+    }
+
+    @keyframes pulseBadge {
+      0% { 
+        box-shadow: 0 0 10px rgba(255, 0, 127, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.2); 
+        transform: scale(1); 
+      }
+      100% { 
+        box-shadow: 0 0 25px rgba(255, 0, 127, 0.9), inset 0 0 15px rgba(255, 0, 127, 0.5); 
+        transform: scale(1.04); 
+      }
+    }
+
+    .main-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .wheel-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wheel-container {
+      position: relative;
+      width: 390px;
+      height: 390px;
+      border-radius: 50%;
+      background-color: #0f172a;
+      box-shadow: 0 0 20px #ff007f, 0 0 40px #7928ca, 0 0 60px #00dfd8;
+      animation: rgbGlow 4s infinite alternate;
+    }
+
+    @keyframes rgbGlow {
+      0% { box-shadow: 0 0 15px #ff007f, 0 0 30px #7928ca; }
+      50% { box-shadow: 0 0 20px #7928ca, 0 0 40px #00dfd8; }
+      100% { box-shadow: 0 0 15px #00dfd8, 0 0 30px #ff007f; }
+    }
+
+    .pointer {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 36px solid #ff007f;
+      z-index: 10;
+      filter: drop-shadow(0 0 8px #ff007f);
+    }
+
+    .center-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background-color: #121826;
+      border-radius: 50%;
+      border: 4px solid #00dfd8;
+      z-index: 5;
+      box-shadow: 0 0 15px #00dfd8;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #spin-btn {
+      background: linear-gradient(45deg, #7928ca, #ff007f);
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+    }
+
+    #spin-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(255, 0, 127, 0.7);
+    }
+
+    #skip-btn {
+      background: linear-gradient(45deg, #007cf0, #00dfd8);
+      box-shadow: 0 0 15px rgba(0, 223, 216, 0.4);
+    }
+
+    #skip-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(0, 223, 216, 0.7);
+    }
+
+    button:disabled {
+      background: #334155;
+      color: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    #winner-text {
+      margin-top: 22px;
+      font-size: 28px;
+      font-weight: 900;
+      color: #00dfd8;
+      text-shadow: 0 0 20px rgba(0, 223, 216, 0.8), 0 0 10px #ff007f;
+      min-height: 45px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 280px;
+    }
+
+    .table-section {
+      background: rgba(18, 24, 38, 0.9);
+      border: 2px solid rgba(0, 223, 216, 0.5);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 0 25px rgba(0, 223, 216, 0.2);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 9px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    th {
+      color: #00dfd8;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      background: rgba(15, 23, 42, 0.95);
+      position: sticky;
+      top: 0;
+    }
+
+    td {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .highlight-winner {
+      background: linear-gradient(90deg, rgba(255, 0, 127, 0.8), rgba(121, 40, 202, 0.8)) !important;
+      color: #ffffff !important;
+      font-weight: 900 !important;
+      font-size: 15px;
+      border-left: 6px solid #00dfd8;
+      box-shadow: 0 0 15px #ff007f;
+      text-shadow: 0 0 10px #ffffff;
+    }
+
+    .input-section {
+      background: rgba(18, 24, 38, 0.9);
+      border: 2px solid rgba(121, 40, 202, 0.5);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 0 25px rgba(121, 40, 202, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .input-section h3 {
+      margin: 0;
+      color: #ff77b9;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: rgba(9, 13, 22, 0.8);
+      border: 1px solid #7928ca;
+      border-radius: 6px;
+      color: #fff;
+      font-family: inherit;
+      padding: 10px;
+      box-sizing: border-box;
+      resize: vertical;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #ff007f;
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+    }
+
+    #update-wheel-btn {
+      background: linear-gradient(45deg, #059669, #10b981);
+      padding: 10px;
+      font-size: 14px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    
+    #update-wheel-btn:hover {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.7);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-container">
+    <h1>
+      <svg class="crown-icon" viewBox="0 0 24 24" fill="url(#crownGrad)">
+        <defs>
+          <linearGradient id="crownGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff007f" />
+            <stop offset="50%" stop-color="#7928ca" />
+            <stop offset="100%" stop-color="#00dfd8" />
+          </linearGradient>
+        </defs>
+        <path d="M2 4l3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
+      </svg>
+      Spin Wheel
+    </h1>
+    <div class="creator-badge">Created by Siddiq</div>
+  </div>
+  
+  <div class="main-layout">
+    <div class="wheel-section">
+      <div class="wheel-container">
+        <div class="pointer"></div>
+        <div class="center-circle"></div>
+        <canvas id="wheel" width="800" height="800"></canvas>
+      </div>
+
+      <div class="button-group">
+        <button id="spin-btn">Putar</button>
+        <button id="skip-btn" disabled>Lewati</button>
+      </div>
+      
+      <div id="winner-text"></div>
+    </div>
+
+    <div class="right-panel">
+      <div class="table-section">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Peserta</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="input-section">
+        <h3>Edit Nama Peserta</h3>
+        <textarea id="names-input" placeholder="Ketik nama di sini, pisahkan dengan Enter..."></textarea>
+        <button id="update-wheel-btn">Perbarui Roda</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("wheel");
+    const ctx = canvas.getContext("2d");
+    const spinBtn = document.getElementById("spin-btn");
+    const skipBtn = document.getElementById("skip-btn");
+    const winnerText = document.getElementById("winner-text");
+    const tableBody = document.getElementById("table-body");
+    const namesInput = document.getElementById("names-input");
+    const updateWheelBtn = document.getElementById("update-wheel-btn");
+
+    let names = [
+      "Siddiq", "Syarif", "Raihan", "Sunan", "Arrafa",
+      "Farros", "Afran", "Yusuf", "Hafiz", "Dafa",
+      "Hemas", "Vallen", "Livia", "Leandra", "Dearosa"
+    ];
+
+    const baseColors = [
+      "#2563eb", "#059669", "#db2777", "#7c3aed", "#d97706",
+      "#0284c7", "#16a34a", "#dc2626", "#9333ea", "#ca8a04",
+      "#0d9488", "#4f46e5", "#ea580c", "#c026d3", "#0891b2"
+    ];
+
+    let colors = [...baseColors];
+    let numSegments = names.length;
+    let arc = (2 * Math.PI) / numSegments;
+    let currentRotation = 0;
+    let isSpinning = false;
+    let spinTimeout = null;
+    let tickInterval = null;
+    let targetRotationValue = 0;
+    
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    let audioCtx;
+
+    namesInput.value = names.join("\n");
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    function playTick() {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(700, audioCtx.currentTime + 0.03);
+      gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.03);
+    }
+
+    function playWinSound() {
+      if (!audioCtx) return;
+      const freqs = [523.25, 659.25, 783.99];
+      freqs.forEach((f, i) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = f;
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+        osc.start(audioCtx.currentTime + (i * 0.08));
+        osc.stop(audioCtx.currentTime + 1.2);
+      });
+    }
+
+    function drawWheel() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = canvas.width / 2;
+
+      for (let i = 0; i < numSegments; i++) {
+        const angle = i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, angle, angle + arc);
+        ctx.lineTo(centerX, centerY);
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#0f172a";
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(angle + arc / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#ffffff";
+        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+        ctx.shadowBlur = 5;
+        
+        const fontSize = numSegments > 20 ? 20 : 30;
+        ctx.font = `bold ${fontSize}px 'Segoe UI', Arial`; 
+        ctx.fillText(names[i], radius - 35, 10);
+        ctx.restore();
+      }
+    }
+
+    function buildTable() {
+      tableBody.innerHTML = "";
+      names.forEach((name, index) => {
+        const tr = document.createElement("tr");
+        tr.id = `row-${index}`;
+        tr.innerHTML = `<td>${index + 1}</td><td>${name}</td>`;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function showWinner(finalRot) {
+      const normalizedRotation = finalRot % 360;
+      const degreePerSegment = 360 / numSegments;
+      let pointerAngle = (270 - normalizedRotation) % 360;
+      if (pointerAngle < 0) pointerAngle += 360;
+      const winningIndex = Math.floor(pointerAngle / degreePerSegment);
+      
+      winnerText.innerText = "Pemenang: " + names[winningIndex];
+      playWinSound();
+      
+      confetti({ 
+        particleCount: 120, 
+        spread: 80, 
+        origin: { y: 0.6 }, 
+        colors: ['#ff007f', '#7928ca', '#00dfd8', '#ffaa00']
+      });
+
+      const rows = document.querySelectorAll("#table-body tr");
+      rows.forEach(row => row.classList.remove("highlight-winner"));
+      
+      const winningRow = document.getElementById(`row-${winningIndex}`);
+      if(winningRow) winningRow.classList.add("highlight-winner");
+
+      spinBtn.disabled = false;
+      skipBtn.disabled = true;
+      isSpinning = false;
+    }
+
+    updateWheelBtn.addEventListener("click", () => {
+      if (isSpinning) return;
+      
+      const rawText = namesInput.value;
+      const newNames = rawText.split('\n').map(n => n.trim()).filter(n => n.length > 0);
+      
+      if (newNames.length < 2) {
+        alert("Minimal harus ada 2 nama peserta untuk diputar!");
+        return;
+      }
+
+      names = newNames;
+      numSegments = names.length;
+      arc = (2 * Math.PI) / numSegments;
+      
+      currentRotation = 0;
+      canvas.style.transition = 'none';
+      canvas.style.transform = `rotate(0deg)`;
+      winnerText.innerText = "";
+      
+      drawWheel();
+      buildTable();
+    });
+
+    drawWheel();
+    buildTable();
+
+    spinBtn.addEventListener("click", () => {
+      if (isSpinning) return;
+      isSpinning = true;
+      initAudio();
+      
+      spinBtn.disabled = true;
+      skipBtn.disabled = false;
+      winnerText.innerText = "Memutar...";
+      
+      document.querySelectorAll("#table-body tr").forEach(row => row.classList.remove("highlight-winner"));
+
+      const randomSpins = Math.floor(Math.random() * 4) + 5; 
+      const randomDegree = Math.floor(Math.random() * 360);
+      targetRotationValue = currentRotation + (randomSpins * 360) + randomDegree;
+      currentRotation = targetRotationValue;
+
+      canvas.style.transition = 'transform 5s cubic-bezier(0.15, 0.75, 0.1, 1)';
+      canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+      let ticks = 0;
+      tickInterval = setInterval(() => {
+        playTick();
+        ticks++;
+        if(ticks > 40) clearInterval(tickInterval); 
+      }, 110);
+
+      spinTimeout = setTimeout(() => {
+        clearInterval(tickInterval);
+        showWinner(currentRotation);
+      }, 5000); 
+    });
+
+    skipBtn.addEventListener("click", () => {
+      if (!isSpinning) return;
+      
+      clearTimeout(spinTimeout);
+      clearInterval(tickInterval);
+
+      canvas.style.transition = 'none';
+      canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+      showWinner(currentRotation);
+    });
+  </script>
+</body>
+</html>

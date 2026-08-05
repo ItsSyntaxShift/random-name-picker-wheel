@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -259,7 +259,7 @@
       flex-direction: column;
       gap: 8px;
       width: 100%;
-      max-height: 200px;
+      max-height: 180px;
       overflow-y: auto;
       padding-right: 5px;
     }
@@ -296,34 +296,56 @@
     }
 
     /* Blok Khusus Tambah Kolom Nama */
-    .add-slots-box {
-      margin-top: 15px;
-      padding: 12px;
+    .slots-control-box {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .add-slots-box, .remove-slots-box {
+      padding: 10px 12px;
       background: rgba(15, 23, 42, 0.7);
-      border: 1px dashed rgba(0, 223, 216, 0.4);
       border-radius: 10px;
     }
 
+    .add-slots-box {
+      border: 1px dashed rgba(0, 223, 216, 0.4);
+    }
+
+    .remove-slots-box {
+      border: 1px dashed rgba(249, 115, 22, 0.4);
+    }
+
     .add-slots-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: #ff77b9;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .remove-slots-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f97316;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
     }
 
     .preset-row {
       display: flex;
       gap: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
     }
 
     .btn-preset {
       flex: 1;
-      padding: 7px 0;
-      font-size: 12px;
+      padding: 6px 0;
+      font-size: 11px;
       font-weight: 800;
       color: #00dfd8;
       background: rgba(0, 223, 216, 0.12);
@@ -338,6 +360,16 @@
       transform: scale(1.05);
     }
 
+    .btn-preset-remove {
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid #f97316;
+    }
+
+    .btn-preset-remove:hover {
+      background: rgba(249, 115, 22, 0.3);
+    }
+
     .custom-row {
       display: flex;
       gap: 8px;
@@ -345,33 +377,50 @@
     }
 
     .custom-input {
-      width: 80px;
-      padding: 8px;
+      width: 70px;
+      padding: 7px;
       background: rgba(15, 23, 42, 0.9);
-      border: 1.5px solid #ff007f;
       border-radius: 6px;
       color: #fff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: bold;
       text-align: center;
       outline: none;
     }
 
-    .btn-add-custom {
+    .custom-input-add {
+      border: 1.5px solid #ff007f;
+    }
+
+    .custom-input-remove {
+      border: 1.5px solid #f97316;
+    }
+
+    .btn-action-custom {
       flex: 1;
-      padding: 8px;
-      font-size: 13px;
+      padding: 7px;
+      font-size: 12px;
       font-weight: 800;
       color: #ffffff;
-      background: rgba(255, 0, 127, 0.2);
-      border: 1.5px solid #ff007f;
       border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
+    .btn-add-custom {
+      background: rgba(255, 0, 127, 0.2);
+      border: 1.5px solid #ff007f;
+    }
     .btn-add-custom:hover {
       background: rgba(255, 0, 127, 0.4);
+    }
+
+    .btn-remove-custom {
+      background: rgba(249, 115, 22, 0.2);
+      border: 1.5px solid #f97316;
+    }
+    .btn-remove-custom:hover {
+      background: rgba(249, 115, 22, 0.4);
     }
 
     .btn-update {
@@ -480,7 +529,7 @@
           <button id="skip-btn" disabled>Skip</button>
         </div>
         
-        <div id="winner-text">Isi nama murid lalu klik "Update Wheel"</div>
+        <div id="winner-text">Enter participant names and click "Update Wheel"</div>
       </div>
 
       <!-- Panel Samping Input Nama -->
@@ -495,24 +544,41 @@
             <input type="text" class="name-slot" placeholder="Participant 4">
           </div>
 
-          <!-- Blok Khusus Tambah Kolom Nama -->
-          <div class="add-slots-box">
-            <div class="add-slots-title">Tambah Kolom Nama:</div>
+          <!-- Kontrol Tambah & Kurangi Kolom -->
+          <div class="slots-control-box">
             
-            <!-- Tombol Preset Cepat -->
-            <div class="preset-row">
-              <button type="button" class="btn-preset" onclick="addSlots(1)">+1</button>
-              <button type="button" class="btn-preset" onclick="addSlots(5)">+5</button>
-              <button type="button" class="btn-preset" onclick="addSlots(10)">+10</button>
-              <button type="button" class="btn-preset" onclick="addSlots(15)">+15</button>
-              <button type="button" class="btn-preset" onclick="addSlots(30)">+30</button>
+            <!-- Blok Tambah -->
+            <div class="add-slots-box">
+              <div class="add-slots-title">Add Slots:</div>
+              <div class="preset-row">
+                <button type="button" class="btn-preset" onclick="addSlots(1)">+1</button>
+                <button type="button" class="btn-preset" onclick="addSlots(5)">+5</button>
+                <button type="button" class="btn-preset" onclick="addSlots(10)">+10</button>
+                <button type="button" class="btn-preset" onclick="addSlots(15)">+15</button>
+                <button type="button" class="btn-preset" onclick="addSlots(30)">+30</button>
+              </div>
+              <div class="custom-row">
+                <input type="number" id="custom-add-input" class="custom-input custom-input-add" placeholder="Qty" min="1" max="100" value="1">
+                <button type="button" id="btn-add-custom" class="btn-action-custom btn-add-custom">+ Add Custom</button>
+              </div>
             </div>
 
-            <!-- Custom Input -->
-            <div class="custom-row">
-              <input type="number" id="custom-slot-input" class="custom-input" placeholder="Jumlah" min="1" max="100" value="1">
-              <button type="button" id="btn-add-custom" class="btn-add-custom">+ Tambah Custom</button>
+            <!-- Blok Kurangi -->
+            <div class="remove-slots-box">
+              <div class="remove-slots-title">Remove Slots:</div>
+              <div class="preset-row">
+                <button type="button" class="btn-preset btn-preset-remove" onclick="removeSlots(1)">-1</button>
+                <button type="button" class="btn-preset btn-preset-remove" onclick="removeSlots(5)">-5</button>
+                <button type="button" class="btn-preset btn-preset-remove" onclick="removeSlots(10)">-10</button>
+                <button type="button" class="btn-preset btn-preset-remove" onclick="removeSlots(15)">-15</button>
+                <button type="button" class="btn-preset btn-preset-remove" onclick="removeSlots(30)">-30</button>
+              </div>
+              <div class="custom-row">
+                <input type="number" id="custom-remove-input" class="custom-input custom-input-remove" placeholder="Qty" min="1" max="100" value="1">
+                <button type="button" id="btn-remove-custom" class="btn-action-custom btn-remove-custom">- Remove Custom</button>
+              </div>
             </div>
+
           </div>
 
           <button id="update-btn" class="btn-update">Update Wheel</button>
@@ -589,8 +655,13 @@
     const spinBtn = document.getElementById("spin-btn");
     const skipBtn = document.getElementById("skip-btn");
     const updateBtn = document.getElementById("update-btn");
+    
     const btnAddCustom = document.getElementById("btn-add-custom");
-    const customSlotInput = document.getElementById("custom-slot-input");
+    const customAddInput = document.getElementById("custom-add-input");
+    
+    const btnRemoveCustom = document.getElementById("btn-remove-custom");
+    const customRemoveInput = document.getElementById("custom-remove-input");
+
     const inputList = document.getElementById("input-list");
     const winnerText = document.getElementById("winner-text");
     const tableBody = document.getElementById("table-body");
@@ -661,12 +732,11 @@
         ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
         ctx.fill();
 
-        // Teks Petunjuk Dibuat Agak Di Bawah Supaya Tidak Tertutup Lingkaran Tengah
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#00dfd8";
-        ctx.font = "bold 28px 'Segoe UI', Arial";
-        ctx.fillText("MASUKKAN NAMA", centerX, centerY + 100);
+        ctx.font = "bold 26px 'Segoe UI', Arial";
+        ctx.fillText("ENTER NAMES", centerX, centerY + 100);
         return;
       }
 
@@ -727,9 +797,30 @@
       inputList.scrollTop = inputList.scrollHeight;
     }
 
+    // Fungsi Kurangi Kolom
+    function removeSlots(count) {
+      const inputSlots = document.querySelectorAll(".name-slot");
+      const totalCurrent = inputSlots.length;
+      // Minimal sisakan 1 slot input agar tidak kosong melompong
+      const targetCount = Math.max(1, totalCurrent - count);
+      const slotsToRemove = totalCurrent - targetCount;
+
+      for (let i = 0; i < slotsToRemove; i++) {
+        const lastSlot = inputList.lastElementChild;
+        if (lastSlot) {
+          inputList.removeChild(lastSlot);
+        }
+      }
+    }
+
     btnAddCustom.addEventListener("click", () => {
-      const val = parseInt(customSlotInput.value) || 1;
+      const val = parseInt(customAddInput.value) || 1;
       addSlots(val);
+    });
+
+    btnRemoveCustom.addEventListener("click", () => {
+      const val = parseInt(customRemoveInput.value) || 1;
+      removeSlots(val);
     });
 
     // Update Roda
@@ -745,10 +836,10 @@
       });
 
       if (names.length < 2) {
-        winnerText.innerText = "Minimal isi 2 nama untuk spin";
+        winnerText.innerText = "Enter at least 2 names to spin";
         spinBtn.disabled = true;
       } else {
-        winnerText.innerText = "Siap untuk Spin!";
+        winnerText.innerText = "Ready to Spin!";
         spinBtn.disabled = false;
       }
 
@@ -765,7 +856,7 @@
       if (pointerAngle < 0) pointerAngle += 360;
       const winningIndex = Math.floor(pointerAngle / degreePerSegment);
       
-      winnerText.innerText = "Pemenang: " + names[winningIndex];
+      winnerText.innerText = "Winner: " + names[winningIndex];
       playWinSound();
       
       confetti({ 
@@ -793,7 +884,7 @@
       
       spinBtn.disabled = true;
       skipBtn.disabled = false;
-      winnerText.innerText = "Memutar...";
+      winnerText.innerText = "Spinning...";
       
       document.querySelectorAll("#table-body tr").forEach(row => row.classList.remove("highlight-winner"));
 
